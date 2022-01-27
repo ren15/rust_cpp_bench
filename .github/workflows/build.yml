@@ -14,10 +14,11 @@ jobs:
           rustc --version
           clang++ --version
 
-      - name: setup Google Benchmark
+      - name: Distro setup
         run: |
-          bash ci/setup_gbench.sh
+          sudo apt install -y ninja-build
           pip install conan
+          bash ci/setup_gbench.sh
 
       - name: Compile and Run
         run: |
