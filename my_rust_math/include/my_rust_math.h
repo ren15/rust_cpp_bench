@@ -4,10 +4,15 @@
 #include <ostream>
 #include <new>
 
+struct Msg {
+  uint8_t msg[4];
+  uint8_t data[4];
+};
+
 extern "C" {
 
-uint32_t get_prime_cnt_leq_u32(uint32_t num);
+Msg gen_prime_vec(uint64_t num);
 
-uint64_t get_prime_cnt_leq_u64(uint64_t num);
+uint64_t get_prime_cnt_leq(uint64_t num);
 
 } // extern "C"

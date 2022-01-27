@@ -8,21 +8,9 @@ fn bench_signal_repo_static(c: &mut Criterion) {
         b.iter(|| {});
     });
 
-    c.bench_function("get_prime_cnt_leq_u64", |b| {
-        b.iter(|| {
-            black_box(prime_num::get_prime_cnt_leq_u64(black_box(1001)));
-        })
-    });
-
-    c.bench_function("get_prime_cnt_leq_u32", |b| {
-        b.iter(|| {
-            black_box(prime_num::get_prime_cnt_leq_u32(black_box(1001)));
-        })
-    });
-
     c.bench_function("get_prime_cnt_leq_u64_const", |b| {
         b.iter(|| {
-            black_box(prime_num::get_prime_cnt_leq_u64(1001));
+            black_box(prime_num::get_prime_cnt_leq(1001));
         })
     });
 }
