@@ -25,12 +25,14 @@ configure: prepare_rust_lib
 
 	conan profile update settings.compiler=gcc default
 	conan profile update settings.compiler.version=10 default
-	conan install ${SOURCE_DIR} --build=missing -if=${BUILD_DIR} 
+	conan install ${SOURCE_DIR} --build=missing -if=${BUILD_DIR} -pr=default
 
 	cmake -S ${SOURCE_DIR} -B ${BUILD_DIR} \
-	-DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
-	-DCMAKE_BUILD_TYPE=Release \
-	-G Ninja
+		-DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_C_COMPILER=gcc-10 \
+		-DCMAKE_CXX_COMPILER=g++-10 \
+		-G Ninja
 
 	ln -sf ${BUILD_DIR}/compile_commands.json ${SOURCE_DIR}
 

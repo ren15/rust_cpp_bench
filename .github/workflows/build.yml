@@ -2,6 +2,9 @@ name: ci
 
 on: push
 
+env:
+  DEBIAN_FRONTEND: noninteractive
+
 jobs:
   run:
     runs-on: ubuntu-20.04
@@ -10,11 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Sys Info
-        run: |
-          rustc --version
-          clang++ --version
-
       - name: Distro setup
         run: |
           bash ci/deb_install.sh
@@ -22,6 +20,7 @@ jobs:
 
       - name: Compile and Run
         run: |
+          PATH="$HOME/.cargo/bin:$PATH"
           make configure
           make build
           make run
