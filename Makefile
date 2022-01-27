@@ -33,4 +33,5 @@ build:
 	cmake --build ${BUILD_DIR} -j
 
 run: 
-	LD_LIBRARY_PATH=./my_rust_math/target/release ${BUILD_DIR}/bin/main
+	${BUILD_DIR}/bin/main
+	${BUILD_DIR}/bin/bench
