@@ -2,14 +2,18 @@
 
 constexpr auto is_prime(std::unsigned_integral auto num) -> bool
 {
-    if (num == 2) {
+    constexpr auto literal_0 = decltype(num) { 0 };
+    constexpr auto literal_2 = decltype(num) { 2 };
+    constexpr auto literal_3 = decltype(num) { 3 };
+
+    if (num == literal_0) {
         return true;
     }
-    if (num % 2 == 0) {
+    if (num % literal_2 == literal_0) {
         return false;
     }
-    for (auto i = decltype(num) { 3 }; i * i <= num; i += 2) {
-        if (num % i == 0) {
+    for (auto i = literal_3; i * i <= num; i += literal_2) {
+        if (num % i == literal_0) {
             return false;
         }
     }
