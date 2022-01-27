@@ -17,6 +17,7 @@ jobs:
       - name: setup Google Benchmark
         run: |
           bash ci/setup_gbench.sh
+          pip install conan
 
       - name: Compile and Run
         run: |
