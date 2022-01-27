@@ -10,3 +10,6 @@ edition = "2021"
 [lib]
 name = "my_rust_math"
 crate-type = ["cdylib", "staticlib"]
+
+[profile.release]
+opt-level = 3

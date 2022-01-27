@@ -25,3 +25,4 @@ jobs:
           make configure
           make build
           make run
+          make bench

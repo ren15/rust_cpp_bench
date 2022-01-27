@@ -29,10 +29,14 @@ configure: prepare_rust_lib
 	-DCMAKE_BUILD_TYPE=Release \
 	-G Ninja
 
+	ln -sf ${BUILD_DIR}/compile_commands.json ${SOURCE_DIR}
+
 
 build: 
 	cmake --build ${BUILD_DIR} -j
 
 run: 
 	${BUILD_DIR}/bin/main
+
+bench:
 	${BUILD_DIR}/bin/bench
