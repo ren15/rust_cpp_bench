@@ -1,34 +1,36 @@
 .PHONY: $(MAKECMDGOALS)
 
-BUILD_DIR=build
-
-COMPILE_CMD=clang++ cxx/main.cpp -o ${BUILD_DIR}/main \
-		-O3 -std=c++20 \
-		-lmy_rust_math -L my_rust_math/target/release \
-		-I my_rust_math/include
-
+REPO_DIR=${PWD}
+BUILD_DIR=${REPO_DIR}/build
+SOURCE_DIR=${REPO_DIR}/cxx
 
 help:
 	echo "Check Makefile"
 test:
 	cd rust_lib && cargo test
-gen_compile_commands:
-	bear -- ${COMPILE_CMD}
-	mv compile_commands.json cxx/compile_commands.json
-
 
 clean:
 	rm -rf $(BUILD_DIR) my_rust_math/target
 	mkdir -p ${BUILD_DIR}
 
-gen_rust_so: clean
+prepare_rust_lib:
 	cd my_rust_math && cargo build --release
-
-cbindgen:
 	cbindgen my_rust_math --output=my_rust_math/include/my_rust_math.h --lang c++
 
-build: gen_rust_so cbindgen
-	${COMPILE_CMD}
+configure: prepare_rust_lib
+	bash ci/setup_gbench.sh
 
-run: build
-	LD_LIBRARY_PATH=./my_rust_math/target/release ${BUILD_DIR}/main
+	cmake -E make_directory ${BUILD_DIR}
+	conan install ${SOURCE_DIR} --build=missing -if=${BUILD_DIR} 
+
+	cmake -S ${SOURCE_DIR} -B ${BUILD_DIR} \
+	-DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
+	-DCMAKE_BUILD_TYPE=Release \
+	-G Ninja
+
+
+build: 
+	cmake --build ${BUILD_DIR} -j
+
+run: 
+	LD_LIBRARY_PATH=./my_rust_math/target/release ${BUILD_DIR}/bin/main

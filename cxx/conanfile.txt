@@ -1,0 +1,6 @@
+[requires]
+fmt/8.0.1
+range-v3/0.10.0
+
+[generators]
+cmake
