@@ -22,16 +22,16 @@ static void BM_cpp_u64(benchmark::State& state)
         benchmark::DoNotOptimize(a);
     }
 }
-BENCHMARK(BM_cpp_u64)->RangeMultiplier(2)->Range(64, 1 << 10);
+BENCHMARK(BM_cpp_u64)->RangeMultiplier(2)->Range(64, 1 << 12);
 
 static void BM_cpp_u64_constexpr(benchmark::State& state)
 {
     for (auto _ : state) {
-        auto a = get_prime_cnt_cpp(1001UL);
+        auto a = get_prime_cnt_cpp(1000UL);
         benchmark::DoNotOptimize(a);
     }
 }
-// BENCHMARK(BM_cpp_u64_constexpr);
+BENCHMARK(BM_cpp_u64_constexpr);
 
 static void BM_rust_u64(benchmark::State& state)
 {
@@ -42,7 +42,6 @@ static void BM_rust_u64(benchmark::State& state)
     }
 }
 
-BENCHMARK(BM_rust_u64)->RangeMultiplier(2)->Range(64, 1 << 10);
-
+BENCHMARK(BM_rust_u64)->RangeMultiplier(2)->Range(64, 1 << 12);
 
 BENCHMARK_MAIN();
