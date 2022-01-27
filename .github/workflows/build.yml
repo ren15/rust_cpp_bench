@@ -1,0 +1,19 @@
+name: ci
+
+on: push
+
+jobs:
+  run:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Sys Info
+        run: |
+          rustc --version
+          clang++ --version
+
+      - name: Compile and Run
+        run: |
+          make run
