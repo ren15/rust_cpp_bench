@@ -14,3 +14,10 @@ crate-type = ["cdylib", "staticlib"]
 
 [profile.release]
 opt-level = 3
+
+[dev-dependencies]
+criterion = "0.3.5"
+rand = "0.8.4"
+[[bench]]
+name = "bench_entry"
+harness = false

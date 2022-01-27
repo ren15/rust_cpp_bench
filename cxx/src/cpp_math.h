@@ -1,6 +1,6 @@
 #include <concepts>
 
-constexpr auto is_prime(std::unsigned_integral auto num) -> bool
+constexpr auto is_prime(std::unsigned_integral auto num) noexcept -> bool
 {
     constexpr auto literal_0 = decltype(num) { 0 };
     constexpr auto literal_2 = decltype(num) { 2 };
@@ -20,10 +20,13 @@ constexpr auto is_prime(std::unsigned_integral auto num) -> bool
     return true;
 }
 
-constexpr auto get_prime_cnt_leq_cpp(std::unsigned_integral auto num) -> decltype(num)
+constexpr auto get_prime_cnt_leq_cpp(std::unsigned_integral auto num) noexcept -> decltype(num)
 {
-    auto cnt = decltype(num) { 0 };
-    for (auto i = decltype(num) { 2 }; i <= num; i++) {
+    constexpr auto literal_0 = decltype(num) { 0 };
+    constexpr auto literal_2 = decltype(num) { 2 };
+
+    auto cnt = literal_0;
+    for (auto i = literal_2; i <= num; i++) {
         if (is_prime(i)) {
             cnt++;
         }
