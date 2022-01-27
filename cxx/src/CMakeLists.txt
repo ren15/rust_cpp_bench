@@ -6,7 +6,6 @@ HINTS "${CMAKE_SOURCE_DIR}/../my_rust_math/target/release")
 
 add_executable(main
 main.cpp
-cpp_math.cpp
 )
 
 target_include_directories(main
@@ -24,7 +23,6 @@ set(target_name bench)
 
 add_executable(${target_name}
 bench.cpp
-cpp_math.cpp
 )
 
 target_include_directories(${target_name}

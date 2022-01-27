@@ -10,7 +10,7 @@ fn bench_signal_repo_static(c: &mut Criterion) {
 
     c.bench_function("get_prime_cnt_leq_u64_const", |b| {
         b.iter(|| {
-            black_box(prime_num::get_prime_cnt_leq(1001));
+            black_box(prime_num::get_prime_cnt_rust(1001));
         })
     });
 }

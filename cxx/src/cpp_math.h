@@ -1,4 +1,5 @@
 #include <concepts>
+#include <vector>
 
 constexpr auto is_prime(std::unsigned_integral auto num) noexcept -> bool
 {
@@ -20,7 +21,7 @@ constexpr auto is_prime(std::unsigned_integral auto num) noexcept -> bool
     return true;
 }
 
-constexpr auto get_prime_cnt_leq_cpp(std::unsigned_integral auto num) noexcept -> decltype(num)
+constexpr auto get_prime_cnt_cpp(std::unsigned_integral auto num) noexcept -> decltype(num)
 {
     constexpr auto literal_0 = decltype(num) { 0 };
     constexpr auto literal_2 = decltype(num) { 2 };
@@ -32,4 +33,18 @@ constexpr auto get_prime_cnt_leq_cpp(std::unsigned_integral auto num) noexcept -
         }
     }
     return cnt;
+}
+
+auto get_prime_vector_cpp(std::unsigned_integral auto num) noexcept -> std::vector<decltype(num)>
+{
+    constexpr auto literal_0 = decltype(num) { 0 };
+    constexpr auto literal_2 = decltype(num) { 2 };
+
+    std::vector<decltype(num)> primes;
+    for (auto i = literal_2; i <= num; i++) {
+        if (is_prime(i)) {
+            primes.push_back(i);
+        }
+    }
+    return primes;
 }

@@ -1,3 +1,4 @@
+#[derive(Debug, Clone)]
 #[repr(C)]
 pub struct Msg {
     msg: [u8; 4],
@@ -6,10 +7,10 @@ pub struct Msg {
 
 #[no_mangle]
 pub extern "C" fn gen_prime_vec(num: u64) -> Msg {
-    let mut ans = Vec::new();
+    let mut data = Vec::new();
     for i in 2..=num {
         if is_prime_u64(i) {
-            ans.push(i);
+            data.push(i);
         }
     }
     Msg {
@@ -19,7 +20,7 @@ pub extern "C" fn gen_prime_vec(num: u64) -> Msg {
 }
 
 #[no_mangle]
-pub extern "C" fn get_prime_cnt_leq(num: u64) -> u64 {
+pub extern "C" fn get_prime_cnt_rust(num: u64) -> u64 {
     let mut cnt = 0;
     for i in 2..=num {
         if is_prime_u64(i) {

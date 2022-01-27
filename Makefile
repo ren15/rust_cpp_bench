@@ -28,8 +28,8 @@ configure: prepare_rust_lib
 	cmake -S ${SOURCE_DIR} -B ${BUILD_DIR} \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DCMAKE_C_COMPILER=gcc-10 \
-		-DCMAKE_CXX_COMPILER=g++-10 \
+		-DCMAKE_C_COMPILER=gcc-11 \
+		-DCMAKE_CXX_COMPILER=g++-11 \
 		-G Ninja
 
 	ln -sf ${BUILD_DIR}/compile_commands.json ${SOURCE_DIR}
