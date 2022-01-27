@@ -16,13 +16,13 @@ uint64_t get_num()
 
 static void BM_cpp_u64(benchmark::State& state)
 {
-    auto num = get_num();
+    auto num = static_cast<uint64_t>(state.range(0));
     for (auto _ : state) {
         auto a = get_prime_cnt_cpp(num);
         benchmark::DoNotOptimize(a);
     }
 }
-BENCHMARK(BM_cpp_u64);
+BENCHMARK(BM_cpp_u64)->RangeMultiplier(2)->Range(64, 1 << 10);
 
 static void BM_cpp_u64_constexpr(benchmark::State& state)
 {
@@ -31,16 +31,18 @@ static void BM_cpp_u64_constexpr(benchmark::State& state)
         benchmark::DoNotOptimize(a);
     }
 }
-BENCHMARK(BM_cpp_u64_constexpr);
+// BENCHMARK(BM_cpp_u64_constexpr);
 
 static void BM_rust_u64(benchmark::State& state)
 {
-    auto num = get_num();
+    auto num = static_cast<uint64_t>(state.range(0));
     for (auto _ : state) {
         auto a = get_prime_cnt_rust(num);
         benchmark::DoNotOptimize(a);
     }
 }
-BENCHMARK(BM_rust_u64);
+
+BENCHMARK(BM_rust_u64)->RangeMultiplier(2)->Range(64, 1 << 10);
+
 
 BENCHMARK_MAIN();
