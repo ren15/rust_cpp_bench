@@ -5,6 +5,7 @@ on: push
 jobs:
   run:
     runs-on: ubuntu-20.04
+    container: debian:sid
 
     steps:
       - uses: actions/checkout@v2
@@ -16,8 +17,7 @@ jobs:
 
       - name: Distro setup
         run: |
-          sudo apt install -y ninja-build
-          pip install conan
+          bash ci/deb_install.sh
           bash ci/setup_gbench.sh
 
       - name: Compile and Run

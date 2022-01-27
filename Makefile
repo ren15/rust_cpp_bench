@@ -22,6 +22,9 @@ prepare_gbench:
 
 configure: prepare_rust_lib
 	cmake -E make_directory ${BUILD_DIR}
+
+	conan profile update settings.compiler=gcc default
+	conan profile update settings.compiler.version=10 default
 	conan install ${SOURCE_DIR} --build=missing -if=${BUILD_DIR} 
 
 	cmake -S ${SOURCE_DIR} -B ${BUILD_DIR} \
