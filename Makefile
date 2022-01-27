@@ -17,9 +17,10 @@ prepare_rust_lib:
 	cd my_rust_math && cargo build --release
 	cbindgen my_rust_math --output=my_rust_math/include/my_rust_math.h --lang c++
 
-configure: prepare_rust_lib
+prepare_gbench:
 	bash ci/setup_gbench.sh
 
+configure: prepare_rust_lib
 	cmake -E make_directory ${BUILD_DIR}
 	conan install ${SOURCE_DIR} --build=missing -if=${BUILD_DIR} 
 
