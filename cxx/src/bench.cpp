@@ -1,4 +1,4 @@
-#include "cpp_math.h"
+#include "cpp_math.hpp"
 #include <my_rust_math.h>
 
 #include <benchmark/benchmark.h>
@@ -10,7 +10,7 @@
 
 uint64_t get_num()
 {
-    static auto num = static_cast<uint64_t>(rand() % 100 + 1000);
+    static auto num = static_cast<uint64_t>(rand() % 10 + 100);
     return num;
 }
 

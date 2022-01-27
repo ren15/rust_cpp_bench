@@ -1,4 +1,4 @@
-#include "cpp_math.h"
+#include "cpp_math.hpp"
 #include <my_rust_math.h>
 
 #include <iostream>
