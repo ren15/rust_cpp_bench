@@ -1,3 +1,7 @@
+struct DataStruct {
+    primes: Vec<u64>,
+}
+
 #[derive(Debug, Clone)]
 #[repr(C)]
 pub struct Msg {
@@ -6,27 +10,13 @@ pub struct Msg {
 }
 
 #[no_mangle]
-pub extern "C" fn get_primes_rust(num: u64) -> Msg {
-    let data = get_primes(num);
-
-    Msg {
-        msg: [0; 4],
-        data: [1; 4],
-    }
+pub extern "C" fn get_primes_rust(num: u64) {
+    let _data = get_primes(num);
 }
+
 #[no_mangle]
 pub extern "C" fn get_prime_cnt_rust(num: u64) -> u64 {
-    get_prime_cnt_rust1(num)
-}
-
-fn get_prime_cnt_rust1(num: u64) -> u64 {
-    let mut cnt = 0;
-    for i in 2..=num {
-        if is_prime(i) {
-            cnt += 1;
-        }
-    }
-    cnt
+    get_prime_cnt_rust2(num)
 }
 
 fn get_prime_cnt_rust2(num: u64) -> u64 {
@@ -37,29 +27,20 @@ fn get_prime_cnt_rust2(num: u64) -> u64 {
 }
 
 fn get_primes(num: u64) -> Vec<u64> {
-    let mut data = Vec::new();
-    for i in 2..=num {
-        if is_prime(i) {
-            data.push(i);
-        }
-    }
-    data
+    (2..=num)
+        .into_iter()
+        .filter(|i| is_prime(*i))
+        .collect::<Vec<u64>>()
 }
 
 #[inline]
 fn is_prime(num: u64) -> bool {
-    if num == 2 {
-        return true;
-    }
-    if num % 2 == 0 {
-        return false;
-    }
-    let mut i = 3;
-    while i * i <= num {
-        if num % i == 0 {
+    let mut j = 2;
+    while j * j <= num {
+        if num % j == 0 {
             return false;
         }
-        i += 2;
+        j += 1;
     }
     true
 }
@@ -70,9 +51,9 @@ mod tests {
     use super::*;
     #[test]
     fn test_prime_cnt() {
-        assert_eq!(get_prime_cnt_rust1(2), 1);
-        assert_eq!(get_prime_cnt_rust1(3), 2);
-        assert_eq!(get_prime_cnt_rust1(10), 4);
+        assert_eq!(get_prime_cnt_rust(2), 1);
+        assert_eq!(get_prime_cnt_rust(3), 2);
+        assert_eq!(get_prime_cnt_rust(10), 4);
     }
     #[test]
     fn test_get_primes() {
