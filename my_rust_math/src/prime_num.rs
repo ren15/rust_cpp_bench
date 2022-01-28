@@ -16,7 +16,17 @@ pub extern "C" fn get_primes_rust(num: u64) {
 
 #[no_mangle]
 pub extern "C" fn get_prime_cnt_rust(num: u64) -> u64 {
-    get_prime_cnt_rust2(num)
+    get_prime_cnt_rust1(num)
+}
+
+fn get_prime_cnt_rust1(num: u64) -> u64 {
+    let mut cnt = 0;
+    for i in 2..=num {
+        if is_prime(i) {
+            cnt += 1;
+        }
+    }
+    cnt
 }
 
 fn get_prime_cnt_rust2(num: u64) -> u64 {

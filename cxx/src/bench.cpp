@@ -22,7 +22,7 @@ static void BM_cpp_u64(benchmark::State& state)
         benchmark::DoNotOptimize(a);
     }
 }
-BENCHMARK(BM_cpp_u64)->RangeMultiplier(2)->Range(64, 1 << 12);
+BENCHMARK(BM_cpp_u64)->RangeMultiplier(4)->Range(64, 1 << 12);
 
 static void BM_cpp_u64_constexpr(benchmark::State& state)
 {
@@ -42,6 +42,6 @@ static void BM_rust_u64(benchmark::State& state)
     }
 }
 
-BENCHMARK(BM_rust_u64)->RangeMultiplier(2)->Range(64, 1 << 12);
+BENCHMARK(BM_rust_u64)->RangeMultiplier(4)->Range(64, 1 << 12);
 
 BENCHMARK_MAIN();
