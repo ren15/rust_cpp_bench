@@ -8,15 +8,18 @@ pub struct Msg {
 #[no_mangle]
 pub extern "C" fn get_primes_rust(num: u64) -> Msg {
     let data = get_primes(num);
-    
+
     Msg {
         msg: [0; 4],
         data: [1; 4],
     }
 }
-
 #[no_mangle]
 pub extern "C" fn get_prime_cnt_rust(num: u64) -> u64 {
+    get_prime_cnt_rust1(num)
+}
+
+fn get_prime_cnt_rust1(num: u64) -> u64 {
     let mut cnt = 0;
     for i in 2..=num {
         if is_prime(i) {
@@ -24,6 +27,13 @@ pub extern "C" fn get_prime_cnt_rust(num: u64) -> u64 {
         }
     }
     cnt
+}
+
+fn get_prime_cnt_rust2(num: u64) -> u64 {
+    (2..=num)
+        .into_iter()
+        .filter(|i| is_prime(*i))
+        .fold(0, |acc, _| acc + 1)
 }
 
 fn get_primes(num: u64) -> Vec<u64> {
@@ -60,9 +70,9 @@ mod tests {
     use super::*;
     #[test]
     fn test_prime_cnt() {
-        assert_eq!(get_prime_cnt_rust(2), 1);
-        assert_eq!(get_prime_cnt_rust(3), 2);
-        assert_eq!(get_prime_cnt_rust(10), 4);
+        assert_eq!(get_prime_cnt_rust1(2), 1);
+        assert_eq!(get_prime_cnt_rust1(3), 2);
+        assert_eq!(get_prime_cnt_rust1(10), 4);
     }
     #[test]
     fn test_get_primes() {

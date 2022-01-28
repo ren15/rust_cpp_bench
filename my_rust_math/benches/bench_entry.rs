@@ -8,7 +8,12 @@ fn bench_signal_repo_static(c: &mut Criterion) {
         b.iter(|| {});
     });
 
-    c.bench_function("get_prime_cnt_leq_u64_const", |b| {
+    c.bench_function("get_prime_cnt_rust1", |b| {
+        b.iter(|| {
+            black_box(prime_num::get_prime_cnt_rust(1001));
+        })
+    });
+    c.bench_function("get_prime_cnt_rust2", |b| {
         b.iter(|| {
             black_box(prime_num::get_prime_cnt_rust(1001));
         })
