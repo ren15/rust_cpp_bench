@@ -9,50 +9,62 @@ pub struct Msg {
     data: [u8; 4],
 }
 
-#[no_mangle]
-pub extern "C" fn get_primes_rust(num: u64) {
-    let _data = get_primes(num);
-}
+// #[no_mangle]
+// pub extern "C" fn get_primes_rust(num: u64) {
+//     let _data = get_primes(num);
+// }
 
 #[no_mangle]
 pub extern "C" fn get_prime_cnt_rust(num: u64) -> u64 {
     get_prime_cnt_rust1(num)
 }
 
-fn get_prime_cnt_rust1(num: u64) -> u64 {
-    let mut cnt = 0;
-    for i in 2..=num {
-        if is_prime(i) {
-            cnt += 1;
-        }
+#[inline]
+pub fn get_prime_cnt_rust1(num: u64) -> u64 {
+    if num == 2 {
+        return 1;
     }
-    cnt
-}
+    assert!(num >= 3);
 
-fn get_prime_cnt_rust2(num: u64) -> u64 {
-    (2..=num)
+    (3..=num)
+        .step_by(2)
         .into_iter()
         .filter(|i| is_prime(*i))
         .fold(0, |acc, _| acc + 1)
 }
 
-fn get_primes(num: u64) -> Vec<u64> {
-    (2..=num)
-        .into_iter()
-        .filter(|i| is_prime(*i))
-        .collect::<Vec<u64>>()
-}
+// TODO: make is_prime generic
 
 #[inline]
 fn is_prime(num: u64) -> bool {
-    let mut j = 2;
-    while j * j <= num {
-        if num % j == 0 {
+    if num == 2 {
+        return true;
+    }
+
+    let mut i = 3;
+    while i * i <= num {
+        if num % i == 0 {
             return false;
         }
-        j += 1;
+        i += 2;
     }
     true
+}
+
+fn get_primes(num: u64) -> Vec<u64> {
+    let mut primes = Vec::new();
+    let mut i = 2;
+    while i <= num {
+        if is_prime(i) {
+            primes.push(i);
+        }
+        if i == 2 {
+            i += 1;
+        } else {
+            i += 2;
+        }
+    }
+    primes
 }
 
 #[cfg(test)]
