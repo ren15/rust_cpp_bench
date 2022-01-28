@@ -51,6 +51,89 @@ fn is_prime(num: u64) -> bool {
     true
 }
 
+trait GenNum {
+    fn new() -> Self;
+    fn set_as_2(&mut self);
+    fn squared_leq(&self, rhs: &Self) -> bool;
+    fn is_mod(&self, rhs: &Self) -> bool;
+    fn add_2(&mut self);
+}
+
+impl GenNum for u32 {
+    fn new() -> Self {
+        0u32
+    }
+
+    fn set_as_2(&mut self) {
+        *self = 2;
+    }
+
+    fn squared_leq(&self, rhs: &Self) -> bool {
+        (*self) * (*self) <= *rhs
+    }
+    fn is_mod(&self, rhs: &Self) -> bool {
+        (*rhs) % (*self) == 0
+    }
+    fn add_2(&mut self) {
+        *self += 2;
+    }
+}
+
+impl GenNum for u64 {
+    fn new() -> Self {
+        0u64
+    }
+
+    fn set_as_2(&mut self) {
+        *self = 2;
+    }
+
+    fn squared_leq(&self, rhs: &Self) -> bool {
+        (*self) * (*self) <= *rhs
+    }
+    fn is_mod(&self, rhs: &Self) -> bool {
+        (*rhs) % (*self) == 0
+    }
+    fn add_2(&mut self) {
+        *self += 2;
+    }
+}
+
+#[inline]
+fn is_prime_gen<T>(num: T) -> bool
+where
+    T: GenNum,
+{
+    let mut i = T::new();
+    i.set_as_2();
+    while i.squared_leq(&num) {
+        if i.is_mod(&num) {
+            return false;
+        }
+        i.add_2();
+    }
+    true
+}
+
+#[test]
+fn test_is_prime_gen() {
+    assert_eq!(is_prime_gen(2u64), true);
+    assert_eq!(is_prime_gen(3u64), true);
+    assert_eq!(is_prime_gen(4u64), false);
+    assert_eq!(is_prime_gen(5u64), true);
+    assert_eq!(is_prime_gen(6u64), false);
+    assert_eq!(is_prime_gen(10u64), false);
+    assert_eq!(is_prime_gen(13u64), true);
+
+    assert_eq!(is_prime_gen(2u32), true);
+    assert_eq!(is_prime_gen(3u32), true);
+    assert_eq!(is_prime_gen(4u32), false);
+    assert_eq!(is_prime_gen(5u32), true);
+    assert_eq!(is_prime_gen(6u32), false);
+    assert_eq!(is_prime_gen(10u32), false);
+    assert_eq!(is_prime_gen(13u32), true);
+}
+
 fn get_primes(num: u64) -> Vec<u64> {
     let mut primes = Vec::new();
     let mut i = 2;
